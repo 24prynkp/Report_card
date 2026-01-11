@@ -1,0 +1,42 @@
+import requests
+
+def calculate_grade(percentage):
+    if percentage >= 90:
+        return "A+"
+    elif percentage >= 80:
+        return "A"
+    elif percentage >= 70:
+        return "B"
+    elif percentage >= 50:
+        return "C"
+    else:
+        return "Fail"
+
+def fetch_student_data():
+    url = "https://jsonplaceholder.typicode.com/users/1"
+    response = requests.get(url)
+    return response.json()
+
+def generate_report():
+    student = fetch_student_data()
+
+    # Sample marks (normally from DB / input)
+    marks = {
+        "Math": 85,
+        "Science": 78,
+        "English": 90
+    }
+
+    total = sum(marks.values())
+    percentage = total / len(marks)
+    grade = calculate_grade(percentage)
+
+    print("------ STUDENT REPORT CARD ------")
+    print("Name:", student["name"])
+    print("Email:", student["email"])
+    print("Marks:", marks)
+    print("Percentage:", percentage)
+    print("Grade:", grade)
+
+if __name__ == "__main__":
+    generate_report()
